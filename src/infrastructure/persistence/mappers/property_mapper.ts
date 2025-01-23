@@ -3,6 +3,7 @@ import { PropertyEntity } from "../entities/property_entity";
 
 export class PropertyMapper {
   static toDomain(entity: PropertyEntity): Property {
+    PropertyMapper.validadeFieldsPropertyEntity(entity);
     return new Property(
       entity.id,
       entity.name,
@@ -20,5 +21,15 @@ export class PropertyMapper {
     entity.maxGuests = domain.getMaxGuests();
     entity.basePricePerNight = domain.getBasePricePerNight();
     return entity;
+  }
+
+  static validadeFieldsPropertyEntity(entity: PropertyEntity): void {
+    if (!entity.name) {
+      throw new Error("O nome é obrigatório");
+    }
+    if (!entity.description) {
+      throw new Error("A description é obrigatório");
+    }
+    // TODO Outros campos
   }
 }

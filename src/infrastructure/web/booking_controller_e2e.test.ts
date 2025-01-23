@@ -186,4 +186,27 @@ describe("BookingController", () => {
     expect(cancelResponse.status).toBe(400);
     expect(cancelResponse.body.message).toBe("Reserva não encontrada.");
   });
+
+  it("deve retornar erro ao tentar cancelar uma reserva que não existe", async () => {
+    const response = await request(app).post("/bookings").send({
+      propertyId: "1",
+      guestId: "1",
+      startDate: "2024-12-20",
+      endDate: "2024-12-25",
+      guestCount: 2,
+    });
+
+    const bookingId = response.body.booking.id;
+
+    await request(app).post(
+      `/bookings/${bookingId}/cancel`
+    );
+
+    const cancelResponse = await request(app).post(
+      `/bookings/${bookingId}/cancel`
+    );
+
+    expect(cancelResponse.status).toBe(400);
+    expect(cancelResponse.body.message).toBe("Reserva não encontrada.");
+  });
 });
