@@ -30,10 +30,6 @@ beforeAll(async () => {
   
     await dataSource.initialize();
   
-    bookingRepository = new TypeORMBookingRepository(
-      dataSource.getRepository(BookingEntity)
-    );
-
     propertyRepository = new TypeORMPropertyRepository(
       dataSource.getRepository(PropertyEntity)
     );
